@@ -1,0 +1,68 @@
+﻿akka {
+	actor {
+		provider = cluster	
+	}
+    
+	remote {
+		dot-netty.tcp {
+			hostname = "127.0.0.1"
+			port = 0
+		}
+	}
+
+	cluster {
+		seed-nodes = ["akka.tcp://ShopApp@127.0.0.1:4053"]
+
+		roles = [clusternode]
+	}
+
+    persistence {
+
+		journal {
+			plugin = "akka.persistence.journal.postgresql"
+			postgresql {
+				class = "Akka.Persistence.PostgreSql.Journal.PostgreSqlJournal, Akka.Persistence.PostgreSql"
+
+				plugin-dispatcher = "akka.actor.default-dispatcher"
+
+				connection-string = "User ID=example;Password=example;Host=localhost;Port=5433;Database=example;"
+
+				connection-timeout = 30s
+
+				schema-name = public
+
+				table-name = event_journal
+
+				auto-initialize = off
+			
+				timestamp-provider = "Akka.Persistence.Sql.Common.Journal.DefaultTimestampProvider, Akka.Persistence.Sql.Common"
+		
+				metadata-table-name = metadata
+
+				stored-as = BYTEA
+			}
+		}
+
+		snapshot-store {
+			plugin = "akka.persistence.snapshot-store.postgresql"
+			postgresql {
+				class = "Akka.Persistence.PostgreSql.Snapshot.PostgreSqlSnapshotStore, Akka.Persistence.PostgreSql"
+
+				plugin-dispatcher = "akka.actor.default-dispatcher"
+
+				connection-string = "User ID=example;Password=example;Host=localhost;Port=5433;Database=example;"
+
+				connection-timeout = 30s
+
+				schema-name = public
+
+				table-name = snapshot_store
+
+				auto-initialize = off
+			
+				stored-as = BYTEA
+			}
+		}
+
+    }
+}
