@@ -1,0 +1,11 @@
+---
+version: '3'
+services:
+  postgres:
+    image: postgres:9.4
+    environment:
+      POSTGRES_USER: example
+      POSTGRES_PASSWORD: example
+    ports: ['127.0.0.1:5433:5432']
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
