@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Akka.Actor;
 using Microsoft.AspNetCore.Mvc;
 using Shared;
+using Shared.Actors;
 
 namespace ApiNode.Controllers
 {

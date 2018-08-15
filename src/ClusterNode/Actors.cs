@@ -4,6 +4,7 @@ using Akka.Actor;
 using Akka.Cluster.Sharding;
 using Akka.Configuration;
 using Shared;
+using Shared.Actors;
 
 namespace ClusterNode
 {

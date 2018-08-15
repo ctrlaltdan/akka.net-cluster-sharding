@@ -4,7 +4,7 @@ using Akka;
 using Akka.Actor;
 using Akka.Persistence;
 
-namespace Shared
+namespace Shared.Actors
 {
     public class Customer : ReceivePersistentActor
     {
@@ -81,7 +81,7 @@ namespace Shared
 
         protected override void PreStart()
         {
-            Print.Message($"Waking up {EntityId} on shard {ShardId}.", ConsoleColor.Yellow);
+            Print.Message($"Waking up {EntityId} on shard {ShardId}.", ConsoleColor.Green);
 
             SetReceiveTimeout(InactivityWindow);
         }
@@ -137,7 +137,7 @@ namespace Shared
 
         private void HandleReceiveTimeout()
         {
-            Print.Message($"{EntityId} is inactive. Shutting down...", ConsoleColor.Yellow);
+            Print.Message($"{EntityId} is inactive. Shutting down...", ConsoleColor.Green);
 
             Context.Stop(Self);
         }

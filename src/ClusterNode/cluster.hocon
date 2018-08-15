@@ -14,6 +14,10 @@
 		seed-nodes = ["akka.tcp://ShopApp@127.0.0.1:4053"]
 
 		roles = [clusternode]
+
+		auto-down-unreachable-after = 5s
+		
+		run-coordinated-shutdown-when-down = on
 	}
 
     persistence {
