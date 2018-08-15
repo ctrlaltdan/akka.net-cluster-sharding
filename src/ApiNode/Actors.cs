@@ -32,13 +32,13 @@ namespace ApiNode
 
             var sharding = ClusterSharding.Get(_system);
             
-            Proxy = sharding.StartProxy(
+            CustomerProxy = sharding.StartProxy(
                 typeName: Customer.TypeName,
                 role: Constants.ClusterNodeRoleName,
                 messageExtractor: new MessageExtractor());
         }
         
-        public IActorRef Proxy { get; }
+        public IActorRef CustomerProxy { get; }
 
         public Task StayAlive()
         {

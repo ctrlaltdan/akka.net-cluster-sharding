@@ -81,7 +81,7 @@ namespace Shared
 
         protected override void PreStart()
         {
-            Console.WriteLine($"Waking up {EntityId}.");
+            Print.Message($"Waking up {EntityId} on shard {ShardId}.", ConsoleColor.Yellow);
 
             SetReceiveTimeout(InactivityWindow);
         }
@@ -96,7 +96,7 @@ namespace Shared
                 .With<ShowBasket>(HandleShowBasket)
                 .With<EmptyBasket>(HandleEmptyBasket)
                 .With<ReceiveTimeout>(HandleReceiveTimeout)
-                .Default(x => Console.WriteLine("Unhandled message type."));
+                .Default(x => Print.Message("Unhandled message type.", ConsoleColor.Red));
         }
 
         private void HandleAddItem(AddItem purchase)
@@ -105,7 +105,7 @@ namespace Shared
             {
                 CartItems.Add(item);
 
-                Console.WriteLine($"{EntityId} added {item.Product} x {item.Quantity}.");
+                Print.Message($"> {EntityId} added {item.Product} x {item.Quantity}.");
             });
         }
 
@@ -123,7 +123,7 @@ namespace Shared
 
             Sender.Tell(new Basket(ShardId, EntityId, items), Self);
 
-            Console.WriteLine($"{EntityId} requested basket contents.");
+            Print.Message($"> {EntityId} requested basket contents.");
         }
 
         private void HandleEmptyBasket()
@@ -132,12 +132,12 @@ namespace Shared
 
             CartItems = new List<CartItem>();
 
-            Console.WriteLine($"{EntityId} emptied their cart.");
+            Print.Message($"> {EntityId} emptied their cart.");
         }
 
         private void HandleReceiveTimeout()
         {
-            Console.WriteLine($"{EntityId} is inactive. Shutting down...");
+            Print.Message($"{EntityId} is inactive. Shutting down...", ConsoleColor.Yellow);
 
             Context.Stop(Self);
         }

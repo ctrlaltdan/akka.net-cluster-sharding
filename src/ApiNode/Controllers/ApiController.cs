@@ -14,7 +14,7 @@ namespace ApiNode.Controllers
             var message = new ShardEnvelope(name, Customer.ShowBasket.Instance);
             var timeout = TimeSpan.FromSeconds(10);
 
-            var basket = await Actors.Instance.Proxy.Ask<Customer.Basket>(message, timeout);
+            var basket = await Actors.Instance.CustomerProxy.Ask<Customer.Basket>(message, timeout);
 
             return Ok(basket);
         }
@@ -24,7 +24,7 @@ namespace ApiNode.Controllers
         {
             var message = new ShardEnvelope(name, new Customer.AddItem(request.Product, request.Quantity));
 
-            Actors.Instance.Proxy.Tell(message, ActorRefs.NoSender);
+            Actors.Instance.CustomerProxy.Tell(message, ActorRefs.NoSender);
 
             return Ok();
         }
@@ -34,7 +34,7 @@ namespace ApiNode.Controllers
         {
             var message = new ShardEnvelope(name, Customer.EmptyBasket.Instance);
 
-            Actors.Instance.Proxy.Tell(message, ActorRefs.NoSender);
+            Actors.Instance.CustomerProxy.Tell(message, ActorRefs.NoSender);
 
             return Ok();
         }

@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.Cluster.Sharding;
-using Akka.Cluster.Tools.Singleton;
 using Akka.Configuration;
 using Shared;
 
@@ -18,7 +17,6 @@ namespace ClusterNode
 
             var config = ConfigurationFactory
                 .ParseString(hocon)
-                .WithFallback(ClusterSingletonManager.DefaultConfig())
                 .WithFallback(ClusterSharding.DefaultConfig());
 
             Instance = new Actors(config);

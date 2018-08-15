@@ -7,6 +7,10 @@ namespace Lighthouse
     {
         private static void Main(string[] args)
         {
+            Print.Line(ConsoleColor.Yellow);
+            Print.Message("LIGHTHOUSE", ConsoleColor.Yellow);
+            Print.Line(ConsoleColor.Yellow);
+
             var lighthouseService = new LighthouseService(actorSystemName: Constants.SystemName);
             lighthouseService.Start();
 

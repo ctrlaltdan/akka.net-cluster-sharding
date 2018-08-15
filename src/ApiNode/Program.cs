@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Shared;
 
 namespace ApiNode
 {
@@ -8,6 +9,10 @@ namespace ApiNode
     {
         public static void Main(string[] args)
         {
+            Print.Line(ConsoleColor.Magenta);
+            Print.Message("API NODE", ConsoleColor.Magenta);
+            Print.Line(ConsoleColor.Magenta);
+
             var host = BuildWebHost(args);
             
             var actors = Actors.Build();
