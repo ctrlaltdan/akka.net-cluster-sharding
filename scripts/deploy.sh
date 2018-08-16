@@ -5,3 +5,4 @@ kubectl create configmap config-postgres --from-file=config-postgres --namespace
 
 kubectl apply -f ./kubernetes/lighthouse-deployment.yaml
 kubectl apply -f ./kubernetes/postgres-deployment.yaml
+kubectl apply -f ./kubernetes/apinode-deployment.yaml
