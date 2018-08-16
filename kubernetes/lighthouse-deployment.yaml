@@ -6,6 +6,7 @@ metadata:
   labels:
     app: lighthouse
 spec:
+  clusterIP: None
   ports:
   - name: "9110"
     port: 9110
@@ -19,7 +20,7 @@ status:
   loadBalancer: {}
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: lighthouse
   namespace: cluster-sample
@@ -28,6 +29,7 @@ spec:
   selector:
     matchLabels:
       app: lighthouse
+  serviceName: lighthouse
   template:
     metadata:
       labels:
@@ -38,13 +40,17 @@ spec:
         image: petabridge/lighthouse:v0.9.2
         env:
         - name: ACTORSYSTEM
-          value: webcrawler
+          value: ShopApp
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         - name: CLUSTER_IP
-          value: lighthouse
+          value: $(POD_NAME).lighthouse
         - name: CLUSTER_PORT
           value: "4053"
         - name: CLUSTER_SEEDS
-          value: akka.tcp://webcrawler@lighthouse:4053
+          value: akka.tcp://ShopApp@lighthouse-0.lighthouse:4053
         ports:
         - containerPort: 9110
         - containerPort: 4053
@@ -55,31 +61,4 @@ spec:
           requests:
             memory: 50Mi
             cpu: "0.02"
-        readinessProbe:
-          tcpSocket:
-            port: 4053
-          initialDelaySeconds: 30
-          timeoutSeconds: 30
       restartPolicy: Always
----
-apiVersion: autoscaling/v2beta1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: lighthouse
-  namespace: default
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: lighthouse
-  minReplicas: 1
-  maxReplicas: 3
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      targetAverageUtilization: 50
-  - type: Resource
-    resource:
-      name: memory
-      targetAverageValue: 50Mi
