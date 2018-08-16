@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using Akka.Actor;
+using Akka.Bootstrap.Docker;
 using Akka.Cluster.Sharding;
 using Akka.Configuration;
 
@@ -78,7 +79,8 @@ namespace Lighthouse
 akka.remote.dot-netty.tcp.port = {1}", ipAddress, port))
                 .WithFallback(ConfigurationFactory.ParseString(injectedClusterConfigString))
                 .WithFallback(ClusterSharding.DefaultConfig())
-                .WithFallback(clusterConfig);
+                .WithFallback(clusterConfig)
+                .BootstrapFromDocker();
 
             return ActorSystem.Create(systemName, finalConfig);
         }

@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 using Akka.Actor;
+using Akka.Bootstrap.Docker;
 using Akka.Cluster.Sharding;
 using Akka.Configuration;
 using Shared;
@@ -18,7 +19,8 @@ namespace ApiNode
 
             var config = ConfigurationFactory
                 .ParseString(hocon)
-                .WithFallback(ClusterSharding.DefaultConfig());
+                .WithFallback(ClusterSharding.DefaultConfig())
+                .BootstrapFromDocker();
 
             Instance = new Actors(config);
 
