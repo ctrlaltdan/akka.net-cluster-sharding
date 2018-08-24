@@ -18,6 +18,10 @@
 		auto-down-unreachable-after = 5s
 		
 		run-coordinated-shutdown-when-down = on
+
+		sharding {
+			snapshot-after = 10
+		}
 	}
 
     persistence {
