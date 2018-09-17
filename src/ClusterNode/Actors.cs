@@ -54,7 +54,9 @@ namespace ClusterNode
 
         public Task Shutdown()
         {
-            return CoordinatedShutdown.Get(_system).Run();
+            return CoordinatedShutdown
+                .Get(_system)
+                .Run(CoordinatedShutdown.ClrExitReason.Instance);
         }
     }
 }

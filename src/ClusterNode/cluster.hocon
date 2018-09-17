@@ -20,7 +20,7 @@
 		run-coordinated-shutdown-when-down = on
 
 		sharding {
-			snapshot-after = 10
+			snapshot-after = 5
 		}
 	}
 
@@ -33,7 +33,7 @@
 
 				plugin-dispatcher = "akka.actor.default-dispatcher"
 
-				connection-string = "User ID=example;Password=example;Host=localhost;Port=5433;Database=example;"
+				connection-string = "User ID=example;Password=example;Host=localhost;Port=5432;Database=example;"
 
 				connection-timeout = 30s
 
@@ -41,13 +41,13 @@
 
 				table-name = event_journal
 
-				auto-initialize = off
+				auto-initialize = on
 			
 				timestamp-provider = "Akka.Persistence.Sql.Common.Journal.DefaultTimestampProvider, Akka.Persistence.Sql.Common"
 		
 				metadata-table-name = metadata
 
-				stored-as = BYTEA
+				stored-as = JSON
 			}
 		}
 
@@ -58,7 +58,7 @@
 
 				plugin-dispatcher = "akka.actor.default-dispatcher"
 
-				connection-string = "User ID=example;Password=example;Host=localhost;Port=5433;Database=example;"
+				connection-string = "User ID=example;Password=example;Host=localhost;Port=5432;Database=example;"
 
 				connection-timeout = 30s
 
@@ -66,9 +66,9 @@
 
 				table-name = snapshot_store
 
-				auto-initialize = off
+				auto-initialize = on
 			
-				stored-as = BYTEA
+				stored-as = JSON
 			}
 		}
 

@@ -38,7 +38,9 @@ namespace Lighthouse
 
         public async Task StopAsync()
         {
-            await CoordinatedShutdown.Get(LighthouseSystem).Run();
+            await CoordinatedShutdown
+                .Get(LighthouseSystem)
+                .Run(CoordinatedShutdown.ClrExitReason.Instance);
         }
     }
 }
